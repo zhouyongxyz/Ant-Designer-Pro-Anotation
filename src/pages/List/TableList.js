@@ -38,6 +38,7 @@ const getValue = obj =>
 const statusMap = ['default', 'processing', 'success', 'error'];
 const status = ['关闭', '运行中', '已上线', '异常'];
 
+// 新建对话框
 const CreateForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props;
   const okHandle = () => {
@@ -124,6 +125,7 @@ class UpdateForm extends PureComponent {
     });
   };
 
+  // 规则配置对话框，含有Steps 功能，不同的step 显示不同的布局内容
   renderContent = (currentStep, formVals) => {
     const { form } = this.props;
     if (currentStep === 1) {
@@ -202,6 +204,7 @@ class UpdateForm extends PureComponent {
     ];
   };
 
+  // 规则配置对话框，底部菜单项，不同的step 显示不用的布局内容
   renderFooter = currentStep => {
     const { handleUpdateModalVisible } = this.props;
     if (currentStep === 1) {
@@ -345,6 +348,7 @@ class TableList extends PureComponent {
 
   componentDidMount() {
     const { dispatch } = this.props;
+    // dva 对应的查询功能函数./models/rule.js fetch 函数来获取数据
     dispatch({
       type: 'rule/fetch',
     });
@@ -490,6 +494,7 @@ class TableList extends PureComponent {
     this.handleUpdateModalVisible();
   };
 
+  // 基本的数据查询布局
   renderSimpleForm() {
     const {
       form: { getFieldDecorator },
@@ -530,6 +535,7 @@ class TableList extends PureComponent {
     );
   }
 
+  // 高级数据查询布局
   renderAdvancedForm() {
     const {
       form: { getFieldDecorator },
@@ -604,6 +610,7 @@ class TableList extends PureComponent {
     );
   }
 
+  // 根据expandForm 的boolean 值来判断，显示哪个具体的布局
   renderForm() {
     const { expandForm } = this.state;
     return expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
@@ -639,6 +646,7 @@ class TableList extends PureComponent {
               <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                 新建
               </Button>
+              {/* 选择数量大于0才会显示，批量操作和更多操作内容 */}
               {selectedRows.length > 0 && (
                 <span>
                   <Button>批量操作</Button>

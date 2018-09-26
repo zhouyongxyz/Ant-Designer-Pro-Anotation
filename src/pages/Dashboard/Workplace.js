@@ -37,6 +37,7 @@ const links = [
   },
 ];
 
+//
 export default
 @connect(({ user, project, activities, chart, loading }) => ({
   currentUser: user.currentUser,
@@ -71,6 +72,8 @@ class Workplace extends PureComponent {
     });
   }
 
+  // 动态相关的内容列表，信息
+  //
   renderActivities() {
     const {
       activities: { list },
@@ -86,6 +89,7 @@ class Workplace extends PureComponent {
         }
         return key;
       });
+      console.log(`workplace events = ${  events}`);
       return (
         <List.Item key={item.id}>
           <List.Item.Meta
@@ -118,6 +122,8 @@ class Workplace extends PureComponent {
       chart: { radarData },
     } = this.props;
 
+    console.log(`Object.keys(currentUser) = ${  Object.keys(currentUser)}`);
+    // 用户信息展示，头像，问候，职称和组织信息
     const pageHeaderContent =
       currentUser && Object.keys(currentUser).length ? (
         <div className={styles.pageHeaderContent}>
@@ -137,6 +143,8 @@ class Workplace extends PureComponent {
         </div>
       ) : null;
 
+    // 用户信息后面的展示的内容项目数，团队内排名，项目访问信息
+    // 具体的样式信息再workplace.less 中
     const extraContent = (
       <div className={styles.extraContent}>
         <div className={styles.statItem}>

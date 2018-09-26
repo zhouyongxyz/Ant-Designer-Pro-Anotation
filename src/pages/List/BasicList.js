@@ -48,6 +48,8 @@ class BasicList extends PureComponent {
 
   componentDidMount() {
     const { dispatch } = this.props;
+    // 调用list/fetch action,用来加载数据，参数count = 5，加载5个数据
+    // 处理函数在src/models/list.js fetch函数
     dispatch({
       type: 'list/fetch',
       payload: {
@@ -85,6 +87,7 @@ class BasicList extends PureComponent {
     });
   };
 
+  // 处理提交添加列表功能
   handleSubmit = e => {
     e.preventDefault();
     const { dispatch, form } = this.props;
@@ -104,6 +107,7 @@ class BasicList extends PureComponent {
     });
   };
 
+  // 处理删除列表功能
   deleteItem = id => {
     const { dispatch } = this.props;
     dispatch({
@@ -122,6 +126,7 @@ class BasicList extends PureComponent {
     } = this.props;
     const { visible, done, current = {} } = this.state;
 
+    // 删除任务确认对话框，模式对话框
     const editAndDelete = (key, currentItem) => {
       if (key === 'edit') this.showEditModal(currentItem);
       else if (key === 'delete') {
@@ -147,6 +152,8 @@ class BasicList extends PureComponent {
       </div>
     );
 
+    // 标准列表的3个RadioGroup 全部/进行中/等待中 已经搜索框
+    // 并没有实际的效果
     const extraContent = (
       <div className={styles.extraContent}>
         <RadioGroup defaultValue="all">
@@ -158,6 +165,8 @@ class BasicList extends PureComponent {
       </div>
     );
 
+    // 分页指示器配置信息，总条数50 ，每页5 条数据
+    // 也是没有实际的数据操作
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
@@ -165,6 +174,7 @@ class BasicList extends PureComponent {
       total: 50,
     };
 
+    // 每行列表数据的owner，时间已经进度信息，是每行数据的部分信息
     const ListContent = ({ data: { owner, createdAt, percent, status } }) => (
       <div className={styles.listContent}>
         <div className={styles.listContentItem}>
@@ -181,6 +191,7 @@ class BasicList extends PureComponent {
       </div>
     );
 
+    // 每行列表数据的后面的菜单信息，编辑和删除，更多数据
     const MoreBtn = props => (
       <Dropdown
         overlay={
@@ -196,6 +207,7 @@ class BasicList extends PureComponent {
       </Dropdown>
     );
 
+    // 添加列表的模式对话框内容
     const getModalContent = () => {
       if (done) {
         return (
@@ -241,6 +253,7 @@ class BasicList extends PureComponent {
               <Select placeholder="请选择">
                 <SelectOption value="付晓晓">付晓晓</SelectOption>
                 <SelectOption value="周毛毛">周毛毛</SelectOption>
+                <SelectOption value="周勇">周勇</SelectOption>
               </Select>
             )}
           </FormItem>
@@ -253,9 +266,11 @@ class BasicList extends PureComponent {
         </Form>
       );
     };
+    // 具体的内容页布局
     return (
       <PageHeaderWrapper>
         <div className={styles.standardList}>
+          {/* 内容上面还是一个Card 布局 */}
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
@@ -270,6 +285,7 @@ class BasicList extends PureComponent {
             </Row>
           </Card>
 
+          {/* extraContent 是标准列表后面的布局，注意一些就OK */}
           <Card
             className={styles.listCard}
             bordered={false}
@@ -291,6 +307,7 @@ class BasicList extends PureComponent {
             >
               添加
             </Button>
+            {/* List 控件，主要关注，loading,pagination,dataSource,renderItem 用于渲染每个数据 */}
             <List
               size="large"
               rowKey="id"

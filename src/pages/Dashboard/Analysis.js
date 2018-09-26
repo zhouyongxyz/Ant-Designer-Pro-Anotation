@@ -208,6 +208,7 @@ class Analysis extends Component {
       </div>
     );
 
+    // 线上热门搜索，下面的列表标题，相关信息
     const columns = [
       {
         title: <FormattedMessage id="app.analysis.table.rank" defaultMessage="Rank" />,
@@ -240,6 +241,7 @@ class Analysis extends Component {
         key: 'range',
         sorter: (a, b) => a.range - b.range,
         render: (text, record) => (
+          // 趋势符号，标记上升和下降趋势
           <Trend flag={record.status === 1 ? 'down' : 'up'}>
             <span style={{ marginRight: 4 }}>{text}%</span>
           </Trend>
@@ -250,6 +252,11 @@ class Analysis extends Component {
 
     const activeKey = currentTabKey || (offlineData[0] && offlineData[0].name);
 
+    // 最下面的一张图表的上面的转化率和旁边的饼图为一个customtab
+    // 由左边的NumberInfo 和 右边的Pie 构成
+    // NumberInfo title 是最上面的文字Stores 0
+    // NumberInfo subTile 是转化率文字
+    // NumberInfo total 是具体显示的百分比
     const CustomTab = ({ data, currentTabKey: currentKey }) => (
       <Row gutter={8} style={{ width: 138, margin: '8px 0' }}>
         <Col span={12}>
