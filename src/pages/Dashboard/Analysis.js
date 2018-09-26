@@ -135,10 +135,12 @@ class Analysis extends Component {
     if (!rangePickerValue[0] || !rangePickerValue[1]) {
       return '';
     }
+    console.log(`rangePickerValue[0] = ${  rangePickerValue[0]}`);
     if (
       rangePickerValue[0].isSame(value[0], 'day') &&
       rangePickerValue[1].isSame(value[1], 'day')
     ) {
+      console.log(`styles.currentDate = ${  styles.currentDate}`);
       return styles.currentDate;
     }
     return '';
@@ -180,6 +182,8 @@ class Analysis extends Component {
       </span>
     );
 
+    // 中间区域，今日，本周，本月，全年的以及日期选择控件
+    // FormattedMessage 是一个umi 里面函数，用作语言格式化的功能，id指代，locales的语言id
     const salesExtra = (
       <div className={styles.salesExtraWrap}>
         <div className={styles.salesExtra}>
